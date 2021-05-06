@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Stock
 from .forms import StockCreateForm, StockSearchForm, StockUpdateForm
+from django.contrib import messages
 
 from django.http import HttpResponse
 import csv
@@ -50,6 +51,7 @@ def add_items(request):
     form = StockCreateForm(request.POST or None)
     if form.is_valid():
         form.save()
+        messages.success(request, "Succesfully Saved")
         return redirect('/list_item')
     context = {
         "form": form,
@@ -79,3 +81,12 @@ def delete_items(request, pk):
         queryset.delete()
         return redirect('/list_item')
     return render(request, 'delete_items.html')
+
+
+def stock_detail(request, pk):
+    queryset = Stock.objects.get(id=pk)
+    context = {
+        "title": queryset.item_name,
+        "queryset": queryset,
+    }
+    return render(request, "stock_detail.html", context)
