@@ -45,7 +45,6 @@
                 <th>Last Updated</th>
                 <th></th>
                 <th></th>
-                <th></th>
               </tr>
             </thead>
             {% for instance in queryset %}
@@ -53,7 +52,7 @@
               <td>{{forloop.counter}}</td>
               <td>{{instance.category}}</td>
               <td>{{instance.item_name}}</td>
-              <td>{{instance.quantity}}</td>
+              <td><a href="{% url 'stock_detail' instance.id %}">{{instance.quantity}}</a></td>
               <td>{{instance.timestamp}}</td>
               <td>{{instance.last_updated}}</td>
               <td>
@@ -62,7 +61,7 @@
                 >
               </td>
               <td><a href="{% url 'delete_items' instance.id %}">Delete</a></td>
-              <td><a href="{% url 'stock_detail' instance.id %}">{{instance.quantity}}</a></td>
+              
             </tr>
             {% endfor %}
           </table>
